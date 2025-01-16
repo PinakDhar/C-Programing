@@ -1,0 +1,125 @@
+#include <stdio.h>
+
+// Structure to represent a complex number
+struct Complex
+{
+    float real;
+    float imag;
+};
+
+// Function to add two complex numbers
+struct Complex add(struct Complex c1, struct Complex c2)
+{
+    struct Complex result;
+    result.real = c1.real + c2.real;
+    result.imag = c1.imag + c2.imag;
+    return result;
+}
+
+// Function to subtract two complex numbers
+struct Complex subtract(struct Complex c1, struct Complex c2)
+{
+    struct Complex result;
+    result.real = c1.real - c2.real;
+    result.imag = c1.imag - c2.imag;
+    return result;
+}
+
+// Function to multiply two complex numbers
+struct Complex multiply(struct Complex c1, struct Complex c2)
+{
+    struct Complex result;
+    result.real = c1.real * c2.real - c1.imag * c2.imag;
+    result.imag = c1.real * c2.imag + c1.imag * c2.real;
+    return result;
+}
+
+// Function to divide two complex numbers
+struct Complex divide(struct Complex c1, struct Complex c2)
+{
+    struct Complex result;
+    float denominator = c2.real * c2.real + c2.imag * c2.imag;
+    if (denominator == 0)
+    {
+        printf("Division by zero is not allowed.\n");
+        result.real = 0;
+        result.imag = 0;
+    }
+    else
+    {
+        result.real = (c1.real * c2.real + c1.imag * c2.imag) / denominator;
+        result.imag = (c1.imag * c2.real - c1.real * c2.imag) / denominator;
+    }
+    return result;
+}
+
+void display(struct Complex c)
+{
+    printf("%.1f + %.1f i\n", c.real, c.imag);
+}
+
+int main()
+{
+    struct Complex c1, c2, result;
+    char choice;
+
+    printf("Enter the real and imaginary units of the first complex number:\n");
+    printf("First real = ");
+    scanf("%f", &c1.real);
+    printf("First imaginary = ");
+    scanf("%f", &c1.imag);
+
+    printf("\nEnter the real and imaginary units of the second complex number:\n");
+    printf("Second real = ");
+    scanf("%f", &c2.real);
+    printf("Second imaginary = ");
+    scanf("%f", &c2.imag);
+
+    printf("\nYou have entered 1st no. as = ");
+    display(c1);
+    printf("You have entered 2nd no. as = ");
+    display(c2);
+
+    do
+    {
+        printf("\nWhat do you want to do?\n");
+        printf("Press e for exit\n");
+        printf("Press a for addition\n");
+        printf("Press s for subtraction\n");
+        printf("Press m for multiplication\n");
+        printf("Press d for division: ");
+        getchar();
+        choice = getchar();
+
+        switch (choice)
+        {
+        case 'a':
+            result = add(c1, c2);
+            printf("Your ans is: ");
+            display(result);
+            break;
+        case 's':
+            result = subtract(c1, c2);
+            printf("Your ans is: ");
+            display(result);
+            break;
+        case 'm':
+            result = multiply(c1, c2);
+            printf("Your ans is: ");
+            display(result);
+            break;
+        case 'd':
+            result = divide(c1, c2);
+            printf("Your ans is: ");
+            display(result);
+            break;
+        case 'e':
+            printf("Exiting the program.\n");
+            break;
+        default:
+            printf("Invalid choice! Please try again.\n");
+        }
+    } while (choice != 'e');
+
+    return 0;
+}
